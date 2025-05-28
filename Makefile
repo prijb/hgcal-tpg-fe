@@ -158,6 +158,18 @@ stage2SemiEmulationTCBitsAccumulatorFW.exe: test-stage2_Nov24/stage2SemiEmulatio
 stage2SemiEmulator.exe: test-stage2_Nov24/stage2SemiEmulator.cpp inc/*.*  TPGStage2Emulation/*.hh
 	g++ $(CPPFLAGSSTAGE2) test-stage2_Nov24/stage2SemiEmulator.cpp `root-config --libs --cflags` -o stage2SemiEmulator.exe -lEG $(LDFLAGS) $(CPPFLAGS) -l yaml-cpp
 
+# Extra scripts (Prijith)
+readStage2Input.exe: firmware_debug/readStage2Input.cpp EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/
+	g++  $(CPPFLAGSSTAGE2) EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/* firmware_debug/readStage2Input.cpp `root-config --libs --cflags` -L$(BOOST)/lib  -lboost_iostreams -lz -llzma -o readStage2Input.exe
+
+readStage2InputNoSkip.exe: firmware_debug/readStage2InputNoSkip.cpp EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/
+	g++  $(CPPFLAGSSTAGE2) EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/* firmware_debug/readStage2InputNoSkip.cpp `root-config --libs --cflags` -L$(BOOST)/lib  -lboost_iostreams -lz -llzma -o readStage2InputNoSkip.exe
+
+readStage2Output.exe: firmware_debug/readStage2Output.cpp EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/
+	g++  $(CPPFLAGSSTAGE2) EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/* firmware_debug/readStage2Output.cpp `root-config --libs --cflags` -L$(BOOST)/lib  -lboost_iostreams -lz -llzma -o readStage2Output.exe
+
+readStage2OutputNoSkip.exe: firmware_debug/readStage2OutputNoSkip.cpp EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/
+	g++  $(CPPFLAGSSTAGE2) EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/* firmware_debug/readStage2OutputNoSkip.cpp `root-config --libs --cflags` -L$(BOOST)/lib  -lboost_iostreams -lz -llzma -o readStage2OutputNoSkip.exe
 
 clean:
 	rm *.exe
