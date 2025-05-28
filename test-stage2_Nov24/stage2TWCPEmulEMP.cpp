@@ -38,6 +38,7 @@ int main(int argc, char** argv)
   //std::string inputFileName = "EMPStage2Input_6Bxs_96lpGBTs_CEE+1_CEH+2_VBF_SaturationCheck_2025-03-28.txt";
   //std::string inputFileName = "input/stage2/firmware-data/CaptureStage2_250321_1305/rx_summary.txt";
   std::string inputFileName = argv[1] ;
+  std::string outputFileName = argv[2] ;
   
   l1t::demo::BoardData inputs = l1t::demo::read( inputFileName, l1t::demo::FileFormat::EMPv2 );
   auto nChannels = inputs.size();
@@ -149,7 +150,8 @@ int main(int argc, char** argv)
   }
   
   // Write the BoardData to file in EMP format
-  write(boardData, "EMPStage2Output.txt", l1t::demo::FileFormat::EMPv2);
+  //write(boardData, "EMPStage2Output.txt", l1t::demo::FileFormat::EMPv2);
+  write(boardData, outputFileName, l1t::demo::FileFormat::EMPv2);
 
     
   return true;
