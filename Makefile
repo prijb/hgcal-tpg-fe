@@ -174,5 +174,8 @@ readStage2OutputNoSkip.exe: firmware_debug/readStage2OutputNoSkip.cpp EMPTools/C
 stage2CPCalcSelectedWord.exe: test-stage2_Nov24/stage2CPCalcSelectedWord.cpp inc/*.* EMPTools/CMSSWCode/DataFormats/L1THGCal/interface/HGCalCluster_HW.h  TPGStage2Emulation/*.hh
 	g++ $(CPPFLAGSSTAGE2) $(LDFLAGS) $(CPPFLAGS) EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/* test-stage2_Nov24/stage2CPCalcSelectedWord.cpp `root-config --libs --cflags` -L$(BOOST)/lib  -lboost_iostreams -lz -llzma -l yaml-cpp -o stage2CPCalcSelectedWord.exe
 
+stage2CPCalcAllWords.exe: test-stage2_Nov24/stage2CPCalcAllWords.cpp inc/*.* EMPTools/CMSSWCode/DataFormats/L1THGCal/interface/HGCalCluster_HW.h  TPGStage2Emulation/*.hh
+	g++ $(CPPFLAGSSTAGE2) $(LDFLAGS) $(CPPFLAGS) EMPTools/CMSSWCode/L1Trigger/DemonstratorTools/src/* test-stage2_Nov24/stage2CPCalcAllWords.cpp `root-config --libs --cflags` -L$(BOOST)/lib  -lboost_iostreams -lz -llzma -l yaml-cpp -o stage2CPCalcAllWords.exe
+
 clean:
 	rm *.exe

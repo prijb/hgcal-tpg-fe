@@ -146,16 +146,19 @@ int main(int argc, char** argv)
   accmulInput.setCeeE           ( accumulatorWords.at(2) );
   accmulInput.setCeeECore       ( accumulatorWords.at(3) );
   accmulInput.setCeHEarly       ( accumulatorWords.at(4) );
+  
   accmulInput.setSumW           ( accumulatorWords.at(5) );
   accmulInput.setNumberOfTcsW   ( accumulatorWords.at(6) );
   accmulInput.setSumW2          ( accumulatorWords.at(7) );
   accmulInput.setSumWZ          ( accumulatorWords.at(8) );
   accmulInput.setSumWRoZ        ( accumulatorWords.at(9) );
+
   accmulInput.setSumWPhi        ( accumulatorWords.at(10) );
   accmulInput.setSumWZ2         ( accumulatorWords.at(11) );
   accmulInput.setSumWRoZ2       ( accumulatorWords.at(12) );
   accmulInput.setSumWPhi2       ( accumulatorWords.at(13) );
   accmulInput.setLayerBits      ( accumulatorWords.at(14) );
+
   accmulInput.setsatTC          ( accumulatorWords.at(15) );
   accmulInput.setshapeQ         ( accumulatorWords.at(16) );
 
@@ -253,7 +256,7 @@ int main(int argc, char** argv)
   //ap_uint<l1thgcfirmware::HGCalCluster_HW::BITWIDTH_FIRSTWORD> firstw = 0x1855ffff30000000 ;
   //ap_uint<l1thgcfirmware::HGCalCluster_HW::BITWIDTH_SECONDWORD> secondw = 0x0000b829000c02af ;
   //ap_uint<l1thgcfirmware::HGCalCluster_HW::BITWIDTH_THIRDWORD> thirdw = 0x25f0400100017100 ;
-  
+
   std::cout << std::endl;
   std::cout << "Filling FW cluster words from Tx frame index: " << frameIndexTx
   << " with: " <<
