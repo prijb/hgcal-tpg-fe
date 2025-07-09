@@ -15,6 +15,7 @@ int main(int argc, char** argv)
 {
   // Input arguments
   std::string inputFileNameRx, inputFileNameTx;
+  std::string outputAccumulInputFileName = "compareFwAccumulatorInput.txt";
   std::string outputFileName = "compareFwEmul.txt";
   std::string outputFileNameProp = "compareFwEmulProp.txt";
   size_t offsetRx = 0;
@@ -125,6 +126,12 @@ int main(int argc, char** argv)
     return 2;
   }
 
+  // Also the accumulator input data filestream
+  std::ofstream outputAccumulInputFile(outputAccumulInputFileName);
+  if (!outputAccumulInputFile.is_open()) {
+    std::cerr << "Error: Could not open output file " << outputAccumulInputFileName << std::endl;
+    return 5;
+  }
   // Open the two filestreams for output
   std::ofstream outputFile(outputFileName);
   if (!outputFile.is_open()) {
@@ -136,6 +143,9 @@ int main(int argc, char** argv)
     std::cerr << "Error: Could not open output file " << outputFileNameProp << std::endl;
     return 4;
   }
+  
+  outputAccumulInputFile << "FrameNumber,NumberOfTcs,TotE,CeeE,CeeECore,CeHEarly,SumW,NumberOfTcsW,"
+                   << "SumW2,SumWZ,SumWRoZ,SumWPhi,SumWZ2,SumWRoZ2,SumWPhi2,LayerBits,satTC,shapeQ" << std::endl;
   outputFile << "FrameNumber,EmulWord1,FwWord1,EmulWord2,FwWord2,EmulWord3,FwWord3" << std::endl;
   outputFileProp << "FrameNumber,EmulE_T,FwE_T,EmulE_EM,FwE_EM,EmulGCTBits,FwGCTBits,"
                  << "EmulFractionInCE_E,FwFractionInCE_E,EmulFractionInCoreCE_E,FwFractionInCoreCE_E,"
@@ -238,6 +248,28 @@ int main(int argc, char** argv)
     uint64_t emul1 = L1TOutputEmul.pack_secondWord();
     uint64_t emul2 = L1TOutputEmul.pack_thirdWord();
 
+    // Accumulator input data output
+    outputAccumulInputFile << i_frame << ","
+    << std::dec << accmulInput.numberOfTcs() << ","
+    << accmulInput.totE() << ","
+    << accmulInput.ceeE() << ","
+    << accmulInput.ceeECore() << ","
+    << accmulInput.ceHEarly() << ","
+    << accmulInput.sumW() << ","
+    << accmulInput.numberOfTcsW() << ","
+    << accmulInput.sumW2() << ","
+    << accmulInput.sumWZ() << ","
+    << accmulInput.sumWRoZ() << ","
+    << accmulInput.sumWPhi() << ","
+    << accmulInput.sumWZ2() << ","
+    << accmulInput.sumWRoZ2() << ","
+    << accmulInput.sumWPhi2() << ","
+    << std::hex << std::setw(16) << std::setfill('0') << accmulInput.layerBits() << ","
+    << std::dec << accmulInput.issatTC() << ","
+    << std::dec << accmulInput.shapeQ()
+    << std::endl;
+
+
     // Write to output file
     outputFile << i_frame << ","
     << std::hex << std::setw(16) << std::setfill('0') << emul0 << ","
@@ -273,6 +305,9 @@ int main(int argc, char** argv)
     << std::endl;
 
   }
+
+  outputAccumulInputFile.close();
+  std::cout << "Accumulator input data written to: " << outputAccumulInputFileName << std::endl;
 
   outputFile.close();
   std::cout << "Comparison results written to: " << outputFileName << std::endl;

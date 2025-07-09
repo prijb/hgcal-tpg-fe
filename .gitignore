@@ -40,3 +40,5 @@ TPGStage2Emulation/CMSSWCode/*
 mapping/*
 mapping
 data_v11_rx_MsCounter
+plots*/*
+plots*

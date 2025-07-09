@@ -59,6 +59,7 @@ for feature in features:
     data.loc[lost_rx, emul_feature] = np.nan
     data.loc[lost_rx, fw_feature] = np.nan
 
+###### Histogramming ######
 # Plot the nTCs vs frame
 x = np.append(data["FrameNumber"].values, data["FrameNumber"].values[-1] + 1)
 fig, ax = plt.subplots()
@@ -76,7 +77,7 @@ for feature in features:
     if feature == "N_TCs":
         continue
 
-    print(f"Plotting {feature} vs Frame")
+    print(f"Plotting hist: {feature} vs Frame")
 
     fw_features = f"Fw{feature}"
     emul_features = f"Emul{feature}"
@@ -91,4 +92,43 @@ for feature in features:
     ax.legend()
     plt.savefig(f"{args.outdir}/{feature}.png")
 
+##### Scatter plots ######
+os.makedirs(f"{args.outdir}/fw_vs_emul", exist_ok=True)
+for feature in features:
+    print(f"Plotting scatter: Fw{feature} vs Emul{feature}")
 
+    fw_features = f"Fw{feature}"
+    emul_features = f"Emul{feature}"
+
+    fig, ax = plt.subplots()
+    ax.scatter(data[fw_features].values, data[emul_features].values, s=1)
+    # 45 degree line
+    max_value = max(data[fw_features].max(), data[emul_features].max())
+    min_value = min(data[fw_features].min(), data[emul_features].min())
+    ax.plot([min_value, max_value], [min_value, max_value], color='black', linestyle='--')
+    ax.set_xlabel(f"Fw{feature}")
+    ax.set_ylabel(f"Emul{feature}")
+    ax.set_title(f"Fw{feature} vs Emul{feature} (Rx Offset: {offset})")
+    plt.savefig(f"{args.outdir}/fw_vs_emul/{fw_features}_vs_{emul_features}.png")
+
+
+###### Fw-Emul plots ######
+os.makedirs(f"{args.outdir}/fw_emul_diff", exist_ok=True)
+for feature in features:
+    print(f"Plotting Fw-Emul: {feature}")
+
+    fw_features = f"Fw{feature}"
+    emul_features = f"Emul{feature}"
+
+    fig, ax = plt.subplots()
+    ax.stairs(data[fw_features].values - data[emul_features].values, x, color='blue', alpha=0.6)
+    ax.axhline(0, color='black', linestyle='--')
+    ax.set_xlabel("Frame Number")
+    ax.set_ylabel(f"Fw{feature} - Emul{feature}")
+    ax.set_title(f"Fw{feature} - Emul{feature} vs Frame (Rx Offset: {offset})")
+    ax.set_xlim(x_low, x_high)
+    plt.savefig(f"{args.outdir}/fw_emul_diff/{fw_features}_minus_{emul_features}.png")
+
+
+
+    
